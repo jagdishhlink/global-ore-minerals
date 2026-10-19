@@ -43,7 +43,10 @@ export function Navbar() {
               alt={COMPANY.name}
               width={48}
               height={48}
-              className="h-10 w-auto lg:h-12 rounded-sm"
+              className={cn(
+                "h-10 w-auto lg:h-12 rounded-sm transition-all",
+                !scrolled && "mix-blend-screen brightness-110"
+              )}
               priority
             />
             <div className="hidden sm:block">

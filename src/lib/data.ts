@@ -23,6 +23,41 @@ export const COMPANY = {
 
 export const PRODUCTS = [
   {
+    id: "kaolin-clay",
+    name: "Kaolin Clay",
+    shortName: "Kaolin Clay",
+    tagline: "High Purity. Fine Quality. Multiple Applications.",
+    heroDescription:
+      "High-quality Kaolin Clay (China Clay) valued for its whiteness, fine particle size, softness and chemical stability — supplied as per customer specifications and requirements.",
+    description:
+      "Premium Kaolin Clay (China Clay) with fine particle size, high whiteness, and chemical stability for ceramics, paints, paper, and construction industries.",
+    image: "/images/kaolin-clay-closeup.jpg",
+    specs: {
+      composition: "SiO₂ & Al₂O₃",
+      quality: ["Fine Particle Size", "High Whiteness & Brightness", "Chemical Stability", "Soft Texture"],
+    },
+    features: [
+      "Fine particle size with high whiteness and brightness",
+      "Excellent chemical stability and soft texture",
+      "Versatile use across multiple industries",
+      "Custom specifications as per buyer requirements",
+    ],
+    applications: [
+      "Ceramics & Tiles",
+      "Paints & Coatings",
+      "Paper Industry",
+      "Rubber & Plastics",
+      "Cement & Construction",
+      "Refractories & Others",
+    ],
+    keyProperties: [
+      { label: "Whiteness", value: "High", unit: "" },
+      { label: "Particle", value: "Fine", unit: "Size" },
+      { label: "Stability", value: "High", unit: "Chemical" },
+      { label: "Texture", value: "Soft", unit: "" },
+    ],
+  },
+  {
     id: "silica-sand",
     name: "Silica Sand",
     shortName: "Silica Sand",
@@ -66,7 +101,7 @@ export const PRODUCTS = [
       "High quality Bauxite Ore in various grades to meet the diverse requirements of cement, refractory, chemical and aluminum industries.",
     description:
       "Natural and high grade bauxite sourced from trusted mines, available in Cement Grade, Laterite, and High Grade variants.",
-    image: "/images/calcined-bauxite-plant.jpeg",
+    image: "/images/mining-quarry.jpeg",
     specs: {
       grades: ["Cement Grade", "Laterite Bauxite", "High Grade Bauxite"],
     },
@@ -121,7 +156,7 @@ export const PRODUCTS = [
       "Produced by carefully calcining high quality bauxite ore in rotary kilns at high temperature, ensuring excellent physical strength.",
     description:
       "Premium calcined bauxite processed for high refractoriness with low iron, low alkali, and excellent thermal stability.",
-    image: "/images/mining-quarry.jpeg",
+    image: "/images/calcined-bauxite-plant.jpeg",
     specs: {
       sizes: ["0–5 mm", "5–25 mm", "25–50 mm"],
     },
@@ -202,7 +237,7 @@ export const INDUSTRIES = [
 export const STATS = [
   { value: 10, suffix: "+", label: "Years Experience" },
   { value: 7, suffix: "+", label: "Countries Served" },
-  { value: 3, suffix: "", label: "Premium Products" },
+  { value: 4, suffix: "", label: "Premium Products" },
   { value: 500, suffix: "+", label: "Shipments Delivered" },
 ] as const;
 

@@ -1,12 +1,31 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 
+const HERO_SLIDES = [
+  { src: "/images/silica-sand-processing.jpeg", alt: "Silica sand processing facility", label: "Silica Sand Processing" },
+  { src: "/images/calcined-bauxite-plant.jpeg", alt: "Calcined bauxite rotary kiln plant", label: "Calcined Bauxite Plant" },
+  { src: "/images/silica-sand-mountain.jpeg", alt: "Silica sand stockpile operations", label: "Sand Stockpile Operations" },
+  { src: "/images/mining-quarry.jpeg", alt: "Open pit mineral mining quarry", label: "Mining Quarry" },
+  { src: "/images/kaolin-clay-stockpile.jpg", alt: "Kaolin clay raw material stockpile", label: "Kaolin Clay Stockpile" },
+];
+
 export function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  const next = useCallback(() => setCurrent((c) => (c + 1) % HERO_SLIDES.length), []);
+  const prev = useCallback(() => setCurrent((c) => (c - 1 + HERO_SLIDES.length) % HERO_SLIDES.length), []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 4000);
+    return () => clearInterval(timer);
+  }, [next]);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background video */}
@@ -99,7 +118,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right side image composition */}
+          {/* Right side image slider */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, x: 40 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -108,27 +127,63 @@ export function Hero() {
           >
             <div className="relative w-full max-w-lg">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated border border-white/10">
-                <Image
-                  src="/images/silica-sand-processing.jpeg"
-                  alt="Silica sand processing facility with conveyor belt"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 0vw, 40vw"
-                  priority
-                />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={current}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={HERO_SLIDES[current].src}
+                      alt={HERO_SLIDES[current].alt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 0vw, 40vw"
+                      priority={current === 0}
+                    />
+                  </motion.div>
+                </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/60 via-transparent to-transparent" />
-              </div>
 
-              {/* Floating card */}
-              <div className="absolute -bottom-6 -left-8 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-elevated border border-border-light">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gold-50 flex items-center justify-center">
-                    <Play className="w-5 h-5 text-gold-600 fill-gold-600" />
-                  </div>
+                {/* Slider controls */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between z-10">
                   <div>
-                    <div className="text-sm font-semibold text-navy-900">Mining Operations</div>
-                    <div className="text-xs text-text-tertiary">Gujarat, India</div>
+                    <div className="text-sm font-semibold text-white">{HERO_SLIDES[current].label}</div>
+                    <div className="text-xs text-white/60 mt-0.5">{current + 1} / {HERO_SLIDES.length}</div>
                   </div>
+                  <div className="flex gap-1.5">
+                    <button
+                      onClick={prev}
+                      className="w-8 h-8 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-4 h-4 text-white" />
+                    </button>
+                    <button
+                      onClick={next}
+                      className="w-8 h-8 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-4 h-4 text-white" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Progress dots */}
+                <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                  {HERO_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrent(i)}
+                      className={`h-1 rounded-full transition-all duration-300 ${
+                        i === current ? "w-6 bg-gold-400" : "w-1.5 bg-white/30"
+                      }`}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
 

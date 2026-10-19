@@ -24,7 +24,7 @@ export function Footer() {
                 alt={COMPANY.name}
                 width={44}
                 height={44}
-                className="h-10 w-auto rounded-sm"
+                className="h-10 w-auto rounded-sm mix-blend-screen brightness-110"
               />
               <div>
                 <span className="block text-base font-bold text-white">Global Ore & Minerals</span>
